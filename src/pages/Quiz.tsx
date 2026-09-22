@@ -3,7 +3,7 @@ import { Button, Card, Chip, Icon, Micro, Progress } from "../components/ui";
 import { Diagram } from "../components/Diagrams";
 import { LABEL, type Question } from "../data/questions";
 import type { NavProps } from "../lib/nav";
-import { fmtTime, playCorrect, playDone, playTap, playWrong, type Progress as P } from "../lib/storage";
+import { fmtTime, playDone, playTap, type Progress as P } from "../lib/storage";
 
 export type SessionItem = { q: Question; optionOrder: number[] };
 export type Result = {
@@ -206,8 +206,6 @@ export default function Quiz({
     const next = [...session.answers];
     next[session.index] = orig;
     setSession({ ...session, answers: next });
-    const ok = orig === it.q.correctAnswer;
-    if (sound) (ok ? playCorrect : playWrong)();
   };
 
   const goIdx = (i: number) => setSession({ ...session, index: Math.max(0, Math.min(session.items.length - 1, i)) });
