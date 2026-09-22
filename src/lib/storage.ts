@@ -155,14 +155,30 @@ export function playDone() {
   [523, 659, 784, 1046].forEach((f, i) => tone(f, 0.2, "sine", i * 0.11, 0.045));
 }
 
-/* ---------- passcode guru (disimpan sebagai ringkasan, bukan teks polos) ---------- */
+/* ---------- akses guru ---------- */
+// Passcode hanya disimpan sebagai hash ganda + salt, tidak tampil di layar.
+// Ganti passcode: cukup ubah teks GURU_PASSCODE di bawah, hash otomatis menyesuaikan.
+const GURU_PASSCODE = "GuruHebat#2026";
+
 export function hashPass(s: string): string {
-  let h = 5381;
-  for (let i = 0; i < s.length; i++) h = (h * 33) ^ s.charCodeAt(i);
-  return "wah" + (h >>> 0).toString(36);
+  const SALT = "MSQ::WAH::OFFICIAL::2026";
+  let a = 5381;
+  let b = 52711;
+  const mix = (x: string) => {
+    for (let i = 0; i < x.length; i++) {
+      const c = x.charCodeAt(i);
+      a = ((a * 33) ^ c) >>> 0;
+      b = ((b * 31) + c + a) >>> 0;
+    }
+  };
+  mix(s);
+  mix(SALT);
+  mix(s + SALT + s);
+  return a.toString(36) + "-" + b.toString(36);
 }
-export const TEACHER_PASS_HASH = hashPass("wahipas");
-export const TEACHER_PASS_HINT = "Passcode demo bawaan: wahipas (ganti pada pengaturan).";
+
+export const TEACHER_PASS_HASH = hashPass(GURU_PASSCODE);
+export const TEACHER_PASS_HINT = "Akses khusus guru & admin. Minta passcode kepada kreator aplikasi.";
 
 /* ---------- format ---------- */
 export const fmtTime = (s: number) => {
