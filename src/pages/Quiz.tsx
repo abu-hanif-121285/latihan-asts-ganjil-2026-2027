@@ -89,7 +89,7 @@ export default function Quiz({
       mode,
       categoryLabel: category === "Semua Materi" ? (payload?.ids ? "Soal Remedial" : "Campuran") : category,
       startedAt: Date.now(),
-      limit,
+      limit: limit * 60,
       fromRemedial: !!payload?.ids,
       prevScore: payload?.prevScore ?? null,
     });
