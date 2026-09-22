@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+
+  --color-wash: #eef6fb;
+  --color-wash-2: #e2f0f9;
+  --color-ink: #0e2a47;
+  --color-ink-2: #123457;
+  --color-slate-tint: #33506b;
+  --color-med: #1976d2;
+  --color-med-deep: #0b4a8f;
+  --color-toska: #0fa3a0;
+  --color-toska-deep: #0b807e;
+  --color-mint: #d7f2ea;
+  --color-lightblue: #dcebf7;
+  --color-accent: #f5921e;
+  --color-danger: #cf3232;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-wash);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--color-toska);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.micro {
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.display {
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+/* ---- paper grid texture used on hero / cards ---- */
+.paper-grid {
+  background-image:
+    linear-gradient(to right, rgba(25, 118, 210, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(25, 118, 210, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* ---- motion ---- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes popIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.anim-up {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 0.75, 0.3, 1) both;
+}
+.anim-in {
+  animation: fadeIn 0.3s ease-out both;
+}
+.anim-pop {
+  animation: popIn 0.32s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+.anim-bob {
+  animation: bob 3.4s ease-in-out infinite;
+}
+.dash-flow {
+  stroke-dasharray: 10 12;
+  animation: dash 4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---- print ---- */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .print-card {
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+  .print-full {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
